@@ -47,6 +47,6 @@ Para atender estritamente ao escopo proposto no desafio de projeto, foram aplica
 
 ## 💻 Ferramentas e Paradigma
 
-* **Paradigma:** Modelo Relacional (Estruturação de dados através de entidades, atributos, chaves e restrições de integridade)
+* **Paradigma:** Modelo Relacional (Estruturação de dados através de tabelas, chaves e restrições de integridade)
 * **Ferramenta Utilizada:** MySQL Workbench
 * **Notação Visual:** Representação por indicadores textuais de cardinalidade (ex: `1` e `1..*`)
