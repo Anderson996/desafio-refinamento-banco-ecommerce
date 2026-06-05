@@ -16,7 +16,7 @@ A arquitetura engloba os seguintes módulos funcionais:
 
 ---
 
-## 📐 Diagrama Entidade-Relacionamento (DER)
+## 📐 Diagrama Relacional de Dados
 
 Para solucionar o desafio e mapear visualmente a nova arquitetura do banco de dados, o modelo foi estruturado conforme o diagrama abaixo:
 
