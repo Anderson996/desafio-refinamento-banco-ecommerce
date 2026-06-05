@@ -1,4 +1,4 @@
-# Desafio: Refinamento de Banco de Dados para E-commerce 🛒
+# Desafio: Refinamento de Modelo Relacional para E-commerce 🛒
 
 Este repositório apresenta o desenvolvimento e o refinamento do esquema lógico para um sistema de E-commerce, aprimorado a partir de um modelo base para atender a requisitos de negócio específicos e complexos. O design e a arquitetura de dados foram implementados utilizando a ferramenta **MySQL Workbench**.
 
