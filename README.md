@@ -24,24 +24,28 @@ Para solucionar o desafio e mapear visualmente a nova arquitetura do banco de da
 
 ---
 
-## 🛠️ Refinamentos do Modelo (Requisitos do Desafio)
+## 🛠️ Refinamentos do Modelo (Regras de Negócio Implementadas)
 
-Para atender estritamente ao escopo proposto no desafio de projeto, foram aplicadas três modificações estruturais profundas no modelo original, focando em regras reais de negócio:
+Para atender ao escopo proposto e garantir a viabilidade analítica dos dados, foram aplicadas modificações estruturais profundas no modelo original:
 
 ### 1. Especialização de Clientes (PJ e PF)
-
 * **Regra de Negócio:** Uma conta de cliente pode ser Pessoa Jurídica (PJ) ou Pessoa Física (PF), mas nunca ambas simultaneamente.
-* **Implementação Lógica:** Adotou-se o padrão de **Especialização/Generalização** (Herança). A tabela mãe `Cliente` centraliza os atributos comuns (Nome, Endereço e Tipo). Delas derivam-se as tabelas filhas `Cliente_PF` (CPF) e `Cliente_PJ` (CNPJ). Para garantir a integridade máxima do relacionamento 1:1 e ganho de performance em Joins, a Chave Estrangeira (FK) das tabelas filhas atua simultaneamente como a sua própria Chave Primária (PK), eliminando a necessidade de IDs genéricos adicionais e campos nulos (`NULL`) em massa.
+* **Implementação Lógica:** Adotou-se o padrão de **Especialização/Generalização** (Herança). A tabela mãe `Cliente` centraliza os atributos comuns. Delas derivam-se as tabelas filhas `Cliente_PF` (CPF) e `Cliente_PJ` (CNPJ). A Chave Estrangeira (FK) das tabelas filhas atua simultaneamente como a sua própria Chave Primária (PK), garantindo um relacionamento 1:1 perfeito, campos mandatórios únicos (`UNIQUE` e `NOT NULL`) e máxima performance em JOINs.
 
 ### 2. Múltiplas Formas de Pagamento por Pedido
+* **Regra de Negócio:** O cliente deve ter a flexibilidade de parcelar ou utilizar mais de uma forma de pagamento para fechar um único pedido.
+* **Implementação Lógica:** A entidade `Pagamento` foi totalmente desacoplada da tabela de pedidos. O relacionamento foi modelado como **1 para Muitos (1..*)** a partir de `Pedido`, permitindo múltiplas linhas de transação financeira para a mesma ordem de compra.
 
-* **Regra de Negócio:** O cliente deve ter a flexibilidade de registrar mais de uma forma de pagamento para fechar um único pedido.
-* **Implementação Lógica:** A entidade `Pagamento` foi totalmente desacoplada da tabela de pedidos, transformando-se em uma entidade independente. O relacionamento foi modelado como **1 para Muitos (1..*)** a partir de `Pedido`. Isso permite que uma única ordem de compra (`Pedido_idPedido`) aponte para múltiplas linhas de transação na tabela de pagamentos.
+### 3. Preservação do Histórico Comercial (Foco em Data Science)
+* **Regra de Negócio:** Alterações futuras nos preços dos produtos não podem corromper retroativamente o faturamento dos pedidos já concluídos no passado.
+* **Implementação Lógica:** Aplicou-se uma desnormalização intencional na tabela associativa `Relacao_de_produto_pedido`, adicionando a coluna `Preco_unitario DECIMAL(10,2)`. No momento do fechamento da compra, a aplicação registra de forma imutável o preço vigente do produto, blindando os cálculos históricos de receita, LTV e margem de lucro contra distorções inflacionárias ou promocionais.
 
-### 3. Gestão Logística da Entrega
+### 4. Gestão Logística e Fracionamento de Entregas
+* **Regra de Negócio:** Um pedido pode ter seus itens despachados separadamente dependendo da disponibilidade em diferentes centros de distribuição ou parceiros comerciais (Marketplace).
+* **Implementação Lógica:** Criou-se a entidade `Entrega` associada ao `Pedido` em uma relação de **1 para Muitos (1..*)**. Isso possibilita o rastreamento individualizado de sub-remessas vinculadas a um mesmo identificador de compra, contendo status logístico e códigos de rastreio independentes.
 
-* **Regra de Negócio:** Toda entrega associada a um pedido precisa conter, obrigatoriamente, um status de controle e um código de rastreamento.
-* **Implementação Lógica:** Criou-se a entidade isolada `Entrega` para separar o fluxo comercial do fluxo logístico. Para preservar a cronologia correta do sistema (onde a entrega nasce após o fechamento do pedido), a Chave Estrangeira `Pedido_idPedido` foi inserida dentro da tabela `Entrega`, amarrando o rastreio diretamente à sua origem em uma relação estável de 1:1.
+### 5. Otimização de Tipos de Dados
+* Todos os campos temporais foram padronizados de strings para o tipo nativo `DATETIME` para permitir análise de séries temporais. Campos monetários foram blindados contra erros de arredondamento através do tipo de precisão fixa `DECIMAL(10,2)`.
 
 ---
 
