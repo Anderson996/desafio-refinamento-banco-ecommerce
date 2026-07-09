@@ -30,19 +30,19 @@ Para atender ao escopo proposto e garantir a viabilidade analítica dos dados, f
 
 ### 1. Especialização de Clientes (PJ e PF)
 * **Regra de Negócio:** Uma conta de cliente pode ser Pessoa Jurídica (PJ) ou Pessoa Física (PF), mas nunca ambas simultaneamente.
-* **Implementação Lógica:** Adotou-se o padrão de **Especialização/Generalização** (Herança). A tabela mãe `Cliente` centraliza os atributos comuns. Delas derivam-se as tabelas filhas `Cliente_PF` (CPF) e `Cliente_PJ` (CNPJ). A Chave Estrangeira (FK) das tabelas filhas atua simultaneamente como a sua própria Chave Primária (PK), garantindo um relacionamento 1:1 perfeito, campos mandatórios únicos (`UNIQUE` e `NOT NULL`) e máxima performance em JOINs.
+* **Implementação Lógica:** Adotou-se o padrão de **Especialização/Generalização** (Herança). A tabela mãe `cliente` centraliza os atributos comuns. Delas derivam-se as tabelas filhas `cliente_PF` (CPF) e `cliente_PJ` (CNPJ). A Chave Estrangeira (FK) das tabelas filhas atua simultaneamente como a sua própria Chave Primária (PK), garantindo um relacionamento 1:1 perfeito, campos mandatórios únicos (`UNIQUE` e `NOT NULL`) e máxima performance em JOINs.
 
 ### 2. Múltiplas Formas de Pagamento por Pedido
 * **Regra de Negócio:** O cliente deve ter a flexibilidade de parcelar ou utilizar mais de uma forma de pagamento para fechar um único pedido.
-* **Implementação Lógica:** A entidade `Pagamento` foi totalmente desacoplada da tabela de pedidos. O relacionamento foi modelado como **1 para Muitos (1..*)** a partir de `Pedido`, permitindo múltiplas linhas de transação financeira para a mesma ordem de compra.
+* **Implementação Lógica:** A entidade `pagamento` foi totalmente desacoplada da tabela de pedidos. O relacionamento foi modelado como **1 para Muitos (1..*)** a partir de `pedido`, permitindo múltiplas linhas de transação financeira para a mesma ordem de compra.
 
 ### 3. Preservação do Histórico Comercial (Foco em Data Science)
 * **Regra de Negócio:** Alterações futuras nos preços dos produtos não podem corromper retroativamente o faturamento dos pedidos já concluídos no passado.
-* **Implementação Lógica:** Aplicou-se uma desnormalização intencional na tabela associativa `Relacao_de_produto_pedido`, adicionando a coluna `Preco_unitario DECIMAL(10,2)`. No momento do fechamento da compra, a aplicação registra de forma imutável o preço vigente do produto, blindando os cálculos históricos de receita, LTV e margem de lucro contra distorções inflacionárias ou promocionais.
+* **Implementação Lógica:** Aplicou-se uma desnormalização intencional na tabela associativa `relacao_de_produto_pedido`, adicionando a coluna `preco_unitario DECIMAL(10,2)`. No momento do fechamento da compra, a aplicação registra de forma imutável o preço vigente do produto, blindando os cálculos históricos de receita, LTV e margem de lucro contra distorções inflacionárias ou promocionais.
 
 ### 4. Gestão Logística e Fracionamento de Entregas
 * **Regra de Negócio:** Um pedido pode ter seus itens despachados separadamente dependendo da disponibilidade em diferentes centros de distribuição ou parceiros comerciais (Marketplace).
-* **Implementação Lógica:** Criou-se a entidade `Entrega` associada ao `Pedido` em uma relação de **1 para Muitos (1..*)**. Isso possibilita o rastreamento individualizado de sub-remessas vinculadas a um mesmo identificador de compra, contendo status logístico e códigos de rastreio independentes.
+* **Implementação Lógica:** Criou-se a entidade `entrega` associada ao `pedido` em uma relação de **1 para Muitos (1..*)**. Isso possibilita o rastreamento individualizado de sub-remessas vinculadas a um mesmo identificador de compra, contendo status logístico e códigos de rastreio independentes.
 
 ### 5. Otimização de Tipos de Dados
 * Todos os campos temporais foram padronizados de strings para o tipo nativo `DATETIME` para permitir análise de séries temporais. Campos monetários foram blindados contra erros de arredondamento através do tipo de precisão fixa `DECIMAL(10,2)`.
