@@ -11,8 +11,8 @@ O esquema mapeia as operações essenciais de uma plataforma de comércio eletr�
 A arquitetura engloba os seguintes módulos funcionais:
 
 * **Catálogo de Produtos:** Gerenciamento de itens por categoria, descrição e valor base.
-* **Logística de Estoque e Fornecedores:** Controle de múltiplos centros de distribuição (`estoque`) e o vínculo com `fornecedores` tradicionais e vendedores parceiros (`terceiro_Vendedor` / Marketplace) através de tabelas associativas (N:M).
-* **Core Comercial (Pedido):** Centralização das vendas realizadas, contendo data de fechamento, descrição e o custo comercial do `frete`.
+* **Logística de Estoque e Fornecedores:** Controle de múltiplos centros de distribuição (`estoque`) e o vínculo com fornecedores (`fornecedor`) tradicionais e vendedores parceiros (`terceiro_Vendedor` / Marketplace) através de tabelas associativas (N:M).
+* **Core Comercial (Pedido):** Centralização das vendas realizadas, contendo data de fechamento, descrição e o custo comercial do `Frete`.
 
 ---
 
