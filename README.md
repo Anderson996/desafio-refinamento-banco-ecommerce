@@ -38,7 +38,7 @@ Para atender ao escopo proposto e garantir a viabilidade analítica dos dados, f
 
 ### 3. Preservação do Histórico Comercial (Foco em Data Science)
 * **Regra de Negócio:** Alterações futuras nos preços dos produtos não podem corromper retroativamente o faturamento dos pedidos já concluídos no passado.
-* **Implementação Lógica:** Aplicou-se uma desnormalização intencional na tabela associativa `relacao_de_produto_pedido`, adicionando a coluna `preco_unitario DECIMAL(10,2)`. No momento do fechamento da compra, a aplicação registra de forma imutável o preço vigente do produto, blindando os cálculos históricos de receita, LTV e margem de lucro contra distorções inflacionárias ou promocionais.
+* **Implementação Lógica:** Aplicou-se uma desnormalização intencional na tabela associativa `relacao_de_produto_pedido`, adicionando a coluna `preco_unitario DECIMAL(10,2)`. No momento do fechamento da compra, a aplicação registra de forma imutável o preço vigente do produto, blindando os cálculos históricos de receita e margem de lucro contra distorções inflacionárias ou promocionais.
 
 ### 4. Gestão Logística e Fracionamento de Entregas
 * **Regra de Negócio:** Um pedido pode ter seus itens despachados separadamente dependendo da disponibilidade em diferentes centros de distribuição ou parceiros comerciais (Marketplace).
