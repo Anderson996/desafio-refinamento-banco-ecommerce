@@ -20,7 +20,7 @@ A arquitetura engloba os seguintes módulos funcionais:
 
 Para solucionar o desafio e mapear visualmente a nova arquitetura do banco de dados, o modelo foi estruturado conforme o diagrama abaixo:
 
-![Modelo Entidade Relacionamento do E-commerce](diagrama_relacional_2.png)
+![Modelo Entidade Relacionamento do E-commerce](diagrama_relacional_3.png)
 
 ---
 
