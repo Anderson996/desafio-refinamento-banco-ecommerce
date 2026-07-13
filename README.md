@@ -54,3 +54,19 @@ Para atender ao escopo proposto e garantir a viabilidade analítica dos dados, f
 * **Paradigma:** Modelo Relacional (Estruturação de dados através de tabelas, chaves e restrições de integridade)
 * **Ferramenta Utilizada:** MySQL Workbench
 * **Notação Visual:** Representação por indicadores textuais de cardinalidade (ex: `1` e `1..*`)
+
+---
+
+## 📂 Estrutura do Repositório
+
+*   **`script_estrutura_e_dados.sql`**: Script SQL contendo a criação do banco de dados, definição de tabelas, chaves primárias/estrangeiras, restrições de integridade (`ENUM`) e a carga inicial de dados (DML).
+*   **`queries_analiticas.sql`**: Caderno de consultas SQL estruturadas para responder às perguntas de negócio do e-commerce, aplicando filtros, agregações, ordenações e junções complexas.
+*   **`diagrama_relacional_3.png`**: Modelo Entidade-Relacionamento exportado via MySQL Workbench.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+1. Certifique-se de ter um servidor **MySQL** instalado e em execução na sua máquina (ou utilize o ambiente do **MySQL Workbench**).
+2. Abra o seu cliente SQL e execute o arquivo `script_estrutura_e_dados.sql` para construir o banco de dados e popular as tabelas.
+3. Com a base criada, abra e execute o arquivo `queries_analiticas.sql` para rodar os relatórios comerciais e logísticos.
